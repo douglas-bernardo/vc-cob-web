@@ -1,0 +1,26 @@
+{
+    "name": "jkdouglas21/vc-cob-web",
+    "description": "Web billing system",
+    "minimum-stability": "stable",
+    "authors": [{
+        "name": "Jackson Douglas Bernardo Feijao",
+        "email": "jkdouglas21@gmail.com",
+        "role": "Developer"
+    }],
+    "config": {
+        "vendor-dir": "vendor"
+    },
+    "autoload": {
+        "psr-4": {
+            "Source\\": "source/"
+        },
+        "files": [
+            "source/Boot/Config.php",
+            "source/Boot/Helpers.php"
+        ]
+    },
+    "require": {
+        "php": "^7.1",
+        "ext-pdo": "^7.1"
+    }
+}
