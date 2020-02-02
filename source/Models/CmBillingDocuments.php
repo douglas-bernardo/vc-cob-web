@@ -16,4 +16,9 @@ class CmBillingDocuments extends CmModel
     {
         return $this->load();
     }
+
+    public function getNumResults()
+    {
+        return self::$nresults;
+    }
 }

@@ -93,5 +93,6 @@ WHERE (D.CODPORTFORMA = F.CODPORTFORMA(+))
    AND p.idendresidencial = endres.idendereco
    AND endres.idendereco = cel.idendereco(+)
    AND endres.idendereco = tel.idendereco(+)
-   AND (D.DATAPROGRAMADA >= TO_DATE('24/07/2019','DD/MM/YYYY')) AND (D.DATAPROGRAMADA <= TO_DATE('31/07/2019','DD/MM/YYYY'))
-   AND ROWNUM <=10
+   AND (D.DATAPROGRAMADA >= TO_DATE('01/07/2006','DD/MM/YYYY'))
+   -- AND (D.DATAPROGRAMADA <= TO_DATE('31/07/2019','DD/MM/YYYY'))
+   -- AND ROWNUM <=10

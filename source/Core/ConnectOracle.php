@@ -7,10 +7,10 @@ class ConnectOracle
     private const TNS = " 
     (DESCRIPTION =
         (ADDRESS_LIST =
-          (ADDRESS = (PROTOCOL = TCP)(HOST = " . CONF_DB_HOST . ")(PORT = " . CONF_DB_PORT . "))
+          (ADDRESS = (PROTOCOL = TCP)(HOST = " . CONF_DB_OCI_HOST . ")(PORT = " . CONF_DB_OCI_PORT . "))
         )
         (CONNECT_DATA =
-          (SERVICE_NAME = " . CONF_DB_SERVICE_NAME . ")
+          (SERVICE_NAME = " . CONF_DB_OCI_SERVICE_NAME . ")
         )
       )
            ";
@@ -21,12 +21,10 @@ class ConnectOracle
     {
         if (empty(self::$conn)) {
             try {
-
-                if(!self::$conn = oci_connect(CONF_DB_USER, CONF_DB_PASS, self::TNS)){
+                if(!self::$conn = oci_connect(CONF_DB_OCI_USER, CONF_DB_OCI_PASS, self::TNS)){
                     $e = oci_error();
                     throw new \Exception("Erro ao conectar ao servidor usando a extensão OCI - " . $e['message']);                    
                 }
-
 
             } catch (\Exception $exception) {
 

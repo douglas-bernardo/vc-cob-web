@@ -1,11 +1,13 @@
 -- Criando banco de dados com codificação padrão:
-CREATE DATABASE bp_cobranca DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+-- CREATE DATABASE bp_cobranca DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 
 -- Selectiona o DB recem criado
 USE bp_cobranca;
 
+DROP TABLE IF EXISTS `billingDocuments`;
+
 -- Criando tabelas
-CREATE TABLE billingDocumments (
+CREATE TABLE billingDocuments (
 	id INT(11) NOT NULL AUTO_INCREMENT,
 	coddocumento INT(11) UNSIGNED,
     razaosocial VARCHAR(100),
@@ -15,8 +17,8 @@ CREATE TABLE billingDocumments (
     dataprogramada DATE,
     datalancto DATE,
     historicocompl VARCHAR(60),
-    valor DECIMAL,
-    valoroutra DECIMAL,
+    valor FLOAT,
+    valoroutra FLOAT,
     descformarecpag VARCHAR(50),
     tipo CHAR(1),
     numdocumento VARCHAR(200),

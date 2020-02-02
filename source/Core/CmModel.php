@@ -16,7 +16,10 @@ abstract class CmModel
     protected $message;
 
     /** @var string */
-    public static $sql;
+    private static $sql;
+
+    /** @var int|null */
+    protected static $nresults;
 
     public function __construct(string $sql) {
         self::$sql = $sql;
@@ -52,11 +55,15 @@ abstract class CmModel
         return $this->message;
     }
 
-    protected function load()
+    protected function load(): array
     {
         try {
 
             $conn = ConnectOracle::connectOracleDB();
+            
+            //conversão dos campos com formato de data
+            $stmt = ConnectOracle::parse($conn, "ALTER SESSION SET NLS_DATE_FORMAT = 'YYYY-MM-DD'");
+            ConnectOracle::execute($stmt);
 
             $stmt = ConnectOracle::parse($conn, self::$sql);
 
@@ -64,19 +71,24 @@ abstract class CmModel
                 throw new Exception("Erro na execução"); 
             }
 
-            $rows = oci_fetch_all($stmt, $results, null, null, OCI_FETCHSTATEMENT_BY_ROW);
+            $results = array();
 
-            $array = array();
+            // $rows = oci_fetch_all($stmt, $results, null, null, OCI_FETCHSTATEMENT_BY_ROW);
 
-            if ($rows>0) {
-                foreach ($results as $item){
-                    $array[] = (object) $item;
-                }
+            // if ($rows>0) {
+            //     self::$nresults = $rows;
+            // }
+
+            while (($row = oci_fetch_array($stmt, OCI_ASSOC)) != false) {
+                $results[] = $row;
             }
+            
+            self::$nresults = count($results);
 
             ConnectOracle::closeCMConnection();
             
-            return $array;
+            //return $array;
+            return $results;
 
         } catch (Exception $e) {
             $this->fail = $e;

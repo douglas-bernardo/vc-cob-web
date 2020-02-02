@@ -1,6 +1,8 @@
 <?php
 
+use Source\Core\Connect;
 use Source\Core\ConnectOracle;
+use Source\Core\DocumentsMapper;
 use Source\Models\CmBillingDocuments;
 
 require __DIR__ . "/vendor/autoload.php";
@@ -30,8 +32,28 @@ require __DIR__ . "/vendor/autoload.php";
 
 // oci_close($conn);
 
-$cmDocs = new CmBillingDocuments;
+// $cmDocs = new CmBillingDocuments;
 
-$documents = $cmDocs->all();
+// var_dump($cmDocs->all());
 
-var_dump($documents);
+
+try {
+
+    $cmDocs = new CmBillingDocuments;
+
+    $conn = Connect::getInstance();
+    
+    $conn->beginTransaction();
+
+    DocumentsMapper::setConnection($conn);
+
+    DocumentsMapper::saveDocuments($cmDocs);
+
+    echo "{$cmDocs->getNumResults()} modificado(as).";
+
+    $conn->commit();
+
+} catch (\Exception $e) {
+    $conn->rollBack();
+    print $e->getMessage();
+}
